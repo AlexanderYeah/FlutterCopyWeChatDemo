@@ -47,7 +47,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-
+  flutter_webview_plugin: ^0.4.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -58,7 +58,19 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+  # 启动页资源
+  - images/loading.jpg
+  # tabbar 资源
+  - images/contact_list_normal.png
+  - images/contact_list_pressed.png
+  - images/find_normal.png
+  - images/find_pressed.png
+  - images/profile_pressed.png
+  - images/profile_normal.png
+  - images/weixin_normal.png
+  - images/weixin_pressed.png
+  
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

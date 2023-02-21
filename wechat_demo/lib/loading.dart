@@ -14,9 +14,10 @@ class _LoadingPageState extends State<LoadingPage> {
     // TODO: implement initState
     super.initState();
     // 初始化的时候 加载启动页
-    new Future.delayed(Duration(seconds: 3), () {
+    new Future.delayed(Duration(seconds: 1), () {
       print("启动页加载");
-      Navigator.of(context).pushNamed("/app");
+      // 这里使用replaced  首页就不会出现返回按钮
+      Navigator.of(context).pushReplacementNamed("/app");
     });
   }
 

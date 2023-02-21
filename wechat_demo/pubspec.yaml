@@ -70,6 +70,16 @@ flutter:
   - images/profile_normal.png
   - images/weixin_normal.png
   - images/weixin_pressed.png
+
+  # 首页顶部导航栏 按钮
+  - images/icon_menu_addfriend.png
+  - images/icon_menu_group.png
+  - images/icon_menu_scan.png
+  - images/icon_search.png
+  - images/icon_public.png
+  - images/icon_shake.png
+  - images/icon_shop.png
+  - images/icon_scan.png
   
   # To add assets to your application, add an assets section, like this:
   # assets:

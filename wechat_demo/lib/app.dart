@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'found/found.dart';
+import 'contacts/contact.dart';
+import 'personal/personal.dart';
+import 'chat/chat.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -9,18 +13,40 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _currentIndex = 0;
+
+  // 定义各个页面
+  _currentPage() {
+    switch (_currentIndex) {
+      case 0:
+        ChatPage chat = new ChatPage();
+        return chat;
+
+      case 1:
+        ContactsPage contact = ContactsPage();
+        return contact;
+
+      case 2:
+        FoundPage found = FoundPage();
+        return found;
+
+      case 3:
+        ProfilePage profile = ProfilePage();
+        return profile;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("111"),
-      ),
+      body: _currentPage(),
       bottomNavigationBar: BottomNavigationBar(
           onTap: (index) {
             setState(() {
               _currentIndex = index;
             });
           },
+          type: BottomNavigationBarType.fixed,
           items: [
             new BottomNavigationBarItem(
                 label: '微信',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -7,7 +8,60 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
+enum Option { A, B }
+
+enum AlertOption { Ok, Cancel }
+
 class _ChatPageState extends State<ChatPage> {
+  // 这个key值必须赋给Scafford 中的key 字段，否则下面会报错
+  final _bottomSheetScaffordKey = GlobalKey<ScaffoldState>();
+
+  _openModalBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            width: double.infinity,
+            height: 250,
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text("Sentence A"),
+                  subtitle: Text(
+                      "Sorry to be so direct,but how much did you pay for this ?"),
+                ),
+                ListTile(
+                  title: Text("Sentence B"),
+                  subtitle: Text(
+                      "this medicine,properly used,will do you a lot of good "),
+                ),
+                ListTile(
+                  title: Text("Sentence C"),
+                  subtitle: Text(
+                      "just as food feeds the body,so reading feeds the mind"),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  _openBottomSheet() {
+    _bottomSheetScaffordKey.currentState!
+        .showBottomSheet((BuildContext context) {
+      return BottomAppBar(
+        child: Container(
+          child: Center(
+            child: Text(
+                "In the absence of better idea i had to choose this method"),
+          ),
+          height: 300,
+          width: double.infinity,
+        ),
+      );
+    });
+  }
+
   // 右上角的菜单
   _popMenuItem(String title,
       {String imagePath = "", IconData icon = Icons.email}) {
@@ -30,9 +84,77 @@ class _ChatPageState extends State<ChatPage> {
     ));
   }
 
+  _openAlertDialog() async {
+    final alertOption = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // 标题
+            title: Text(
+              "This is Alert",
+              style: TextStyle(color: Colors.red),
+            ),
+            // 内容
+            content: Text(
+                "It will not make much difference whether you go today or tomorrow,do you want cancel your plan?"),
+            // 动作
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(AlertOption.Cancel);
+                  },
+                  child: Text("Close")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(AlertOption.Ok);
+                  },
+                  child: Text("Ok"))
+            ],
+          );
+        });
+    print(alertOption);
+  }
+
+  // 异步的回调
+  Future _openOneDialog() async {
+    //
+    final option = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // 选择对话框的样式
+          return SimpleDialog(
+            title: Text(
+              "this is simple",
+              style: TextStyle(color: Colors.red),
+            ),
+            // 可以定义很多选项
+            children: [
+              SimpleDialogOption(
+                child: Text('OptionA'),
+                // 点击关闭对话框
+                onPressed: () {
+                  // 这里把选择的值传递过去
+                  Navigator.of(context).pop(Option.A);
+                },
+              ),
+              SimpleDialogOption(
+                child: Text('Option B'),
+                // 点击关闭对话框
+                onPressed: () {
+                  // 这里把选择的值传递过去
+                  Navigator.of(context).pop(Option.B);
+                },
+              )
+            ],
+          );
+        });
+    print(option);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _bottomSheetScaffordKey,
       appBar: AppBar(
         title: Text("聊天"),
         // 右边的按钮
@@ -66,6 +188,17 @@ class _ChatPageState extends State<ChatPage> {
                   },
                   child: Icon(Icons.add)))
         ],
+      ),
+      body: Container(
+        child: Center(
+          child: ElevatedButton(
+            child: Text("对话框"),
+            onPressed: () {
+              // 显示对话框
+              _openModalBottomSheet();
+            },
+          ),
+        ),
       ),
     );
   }
